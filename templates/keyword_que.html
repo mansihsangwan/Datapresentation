@@ -1,0 +1,25 @@
+{% block content %}
+    
+    <div class='col-sm-8 col-sm-offset-2'></div>
+    
+
+
+    <Form method='POST' action='' enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <h1>{{ instance }} Realated Questions</h1>
+    </br>
+
+    
+    {% for myform in formset %}
+        {{ myform.as_p }}
+    {% endfor %}
+
+    
+   
+    
+    <input type='submit' value='Submit'/>
+    
+    </Form>
+    </div>
+{% endblock content %}

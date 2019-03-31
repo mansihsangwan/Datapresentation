@@ -1,0 +1,10 @@
+{% block content %} 
+
+    <div class='col-sm-8 col-sm-offset-2'></div>
+    <center><h1>Data Presentation</h1></center>
+    
+    <a href='{% url "key:keyword" %}'><h3>Trainee Add Keyword</h3></a>
+    <a href='{% url "key:keyword_list" %}'><h3>Keyword List</h3></a>
+    <a href='{% url "key:main" %}'><h3>Add Presentation</h3></a>
+    <a href='{% url "key:manage" %}'><h3>Manage Questions</h3></a>
+{% endblock content %}

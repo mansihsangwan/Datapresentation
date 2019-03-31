@@ -1,0 +1,18 @@
+<html>
+<head>
+        <style type = "text/css">
+            h3.break {
+                page-break-after: always;
+            }
+         </style>
+</head>
+<body>
+{% for title in titles %}
+    <h2>{{title.title}}</h2>
+
+    <p>{{title.description|safe}}</p>
+
+    <h3 class="break"></h3>
+{% endfor %}
+</body>
+</html>

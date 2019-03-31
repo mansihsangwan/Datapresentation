@@ -1,0 +1,33 @@
+{% load static %}
+<html>
+    <head>
+        <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+        <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    </head>
+    <body>
+        <form method="post" action="">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+</br>
+                    <button type= submit>Submit </button>
+</br>
+</br>
+Presentation List :
+{% for u in presentation %}
+<ul>
+    
+        <li>{{u.name}}</li>
+        <input type="button" onclick="location.href='deck/{{u.id}}/';" value="Preview" />
+        <input type="button" onclick="location.href='detail/{{u.id}}/';" value="Add & Update" />
+        
+</ul>
+{% endfor %}
+                    
+          </form>
+    </br>
+    </br>
+    </br>
+          <a href="{%url 'key:key_details'%}" ><button class="btn btn-danger">Back</button></a>
+          
+    </body>
+</html>

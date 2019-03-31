@@ -1,0 +1,19 @@
+{% block content %}
+    
+    <div class='col-sm-8 col-sm-offset-2'></div>
+    <h1>Keyword List</h1>
+    {% for Key in Key %}
+    <ul>
+        <li><a href="{% url 'key:keyword_que_list' Key.id %}">{{Key.add_keyword }}</a></li>
+    </br>
+        <a href="{% url 'key:de' Key.id %}"><button class="btn btn-danger">Preview</button></a>&nbsp;
+        <a href="{% url 'key:keyword_que_list' Key.id %}"><button class="btn btn-danger">Add & Update</button></a>
+    </ul>
+    {% endfor %}
+</br>
+</br>
+</br>
+    <a href="{%url 'key:key_details'%}" ><button class="btn btn-danger">Back</button></a>
+    
+    
+{% endblock content %}

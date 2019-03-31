@@ -1,0 +1,27 @@
+{% block content %}
+    
+    <div class='col-sm-8 col-sm-offset-2'></div>
+    <h1>Add Questions </h1>
+    <Form method='POST' action='' enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+
+    
+        
+    <input type='submit' value='Submit'/>
+    </Form>
+</div>
+
+    {%for que in queslist %}
+    <li>{{ que|safe }}</li>
+   
+    <a href="{%url 'key:que_delete' id=que.id%}" ><button class="btn btn-danger">Delete</button></a>&nbsp;
+    <a href="{%url 'key:que_update' id=que.id%}" ><button class="btn btn-danger">Update</button></a>
+    {%endfor%}
+</br>
+</br>
+</br>
+    <a href="{%url 'key:key_details'%}" ><button class="btn btn-danger">Back</button></a>
+
+{% endblock content %}

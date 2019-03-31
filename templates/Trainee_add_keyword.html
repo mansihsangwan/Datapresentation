@@ -1,0 +1,16 @@
+{% block content %}
+    
+    <div class='col-sm-8 col-sm-offset-2'></div>
+    <h1>Add Keyword Form</h1>
+    <Form method='POST' action='' enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <input type='submit' value='Submit'/>
+    </Form>
+    </div>
+</br>
+</br>
+</br>
+      <a href="{%url 'key:key_details'%}" ><button class="btn btn-danger">Back</button></a>
+{% endblock content %}
