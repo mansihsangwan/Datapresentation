@@ -3,7 +3,9 @@
 <html>
 <head>
   {% for u in titles %}
-  <input type="button" onclick="location.href='/key/keypdf/{{u.keyword_id}}/';" value="Download" />
+    {% if forloop.first %}
+      <input type="button" onclick="location.href='/key/pdf/{{u.presentation_id}}/';" value="Download" style="position: absolute; top: 0; left: 0; z-index: 999;" />
+    {% endif %}
   {% endfor %}
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -23,7 +25,7 @@
   <!-- <link rel="stylesheet" href="{% static 'css/introduction.css'%}"> -->
 
   <!-- Style theme. More available in /themes/style/ or create your own. -->
-  <!-- <link rel="stylesheet" media="screen" href="{% static 'css/neon.css'%}"> -->
+  <!-- <link rel="stylesheet" media="screen" href="{% static 'css/web-2.0.css'%}"> -->
   
 
   <!-- Transition theme. More available in /themes/transition/ or create your own. -->
@@ -49,54 +51,21 @@
   
   </script>
 </head>
-<body>    
-  
-        <hr>
-    
-        <div>
-    
-            <label>Change Webpage Background To:</label>
-    
-            <button type="button" onclick="changeBodyBg('yellow');">Yellow</button>
-    
-            <button type="button" onclick="changeBodyBg('lime');">Lime</button>
-    
-            <button type="button" onclick="changeBodyBg('orange');">Orange</button>
-    
-        </div>
-<!--     
-        <br>
-    
-        <div>
-    
-            <label>Change Heading Background To:</label>
-    
-            <button type="button" onclick="changeHeadingBg('red');">Red</button>
-    
-            <button type="button" onclick="changeHeadingBg('green');">Green</button>
-    
-            <button type="button" onclick="changeHeadingBg('blue');">Blue</button>
-    
-        </div> -->
-  <!-- <div class="theme-menu">
-    <label for="style-themes">Style Theme:</label>
-    <select id="style-themes">
-				<option selected="" value="static/css/web-2.0.css">Web 2.0</option>
-				<option value="static/css/swiss.css">Swiss</option>
-				<option value="static/css/neon.css">Neon</option>
-				<option value="">None</option>
-			</select>
-  </div> -->
+<body style="background:url('/static/3d.jpg');background-size:100% 100%;background-repeat:'no-repeat' ">    
+
   <div class="deck-container">
+      
 
     <!-- Begin slides. Just make elements with a class of slide. -->
 {% for title in titles %}
+{% if title.description %}
 <section class="slide" id="how-to-overview">
-      <h2>{{title.title}}</h2>
+      <center><h2 id="presentaion_title"><u>{{title.title}}</u></h2>
       
-      <p>{{title.description|safe}}</p>
+      <p>{{title.description|safe}}</p></center>
 
     </section>
+    {%endif%}
 {% endfor %}
 
 
@@ -112,22 +81,30 @@
     </div>
 
     <!-- deck.status snippet -->
-    <p class="deck-status" aria-role="status">
+    <p aria-role="status" style="bottom: 0; position: absolute; size: 10px; font-size: small;">
+        &copy; gktcs Innovations pvt. ltd. 2019
+    </p>
+    <div style="position: absolute; bottom: 0; right: 0; height: 100px;">
+        <IMG SRC="/static/gktcs_logo.png" ALT=""  HEIGHT=100>
+    </div>
+    
+    <p class="deck-status" aria-role="status" style="right: 110px;">
       <span class="deck-status-current"></span>
       /
       <span class="deck-status-total"></span>
     </p>
 
-
     
 
     <!-- deck.goto snippet -->
-    <form action="." method="get" class="goto-form">
-      <label for="goto-slide">Go to slide:</label>
-      <input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
-      <datalist id="goto-datalist"></datalist>
-      <input type="submit" value="Go">
-    </form>
+    <div style="margin-left:auto; margin-right:auto;">
+        <form action="." method="get" class="goto-form">
+          <label for="goto-slide" style="font-size:15px">Go to slide:</label>
+          <input type="text" name="slidenum" id="goto-slide" list="goto-datalist" style="font-size:10px">
+          <datalist id="goto-datalist"></datalist>
+          <input type="submit" value="Go" style="font-size:20px">
+        </form>
+      </div>
 
     <!-- End extension snippets. -->
   </div>

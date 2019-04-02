@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.urls import reverse
-from ckeditor_uploader.fields import RichTextUploadingField
+# from ckeditor_uploader.fields import RichTextUploadingField
 import datetime
 # Create your models here.
 class Keyword(models.Model):
@@ -30,8 +30,8 @@ class Presentation(models.Model):
 class Detail(models.Model):
     keyword = models.ForeignKey(Keyword, on_delete=models.SET_NULL, blank=True, null=True)
     update_d = models.DateField(("Date"), default=datetime.date.today)
-    title = models.CharField(max_length=64, blank=True, null=True)
-    description = RichTextUploadingField(blank=True, null=True)
+    title = models.CharField(max_length=100, blank=True, null=True)
+    description = models.TextField(max_length=2000, blank=True, null=True)
     presentation = models.ForeignKey(Presentation, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):

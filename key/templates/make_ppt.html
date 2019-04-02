@@ -1,0 +1,52 @@
+{% load static %}
+<html>
+    <head>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+    </head>
+    <body>
+            <div id="form_set">
+            <form method="post" action="">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    {{ formset.management_form }}
+                    
+                    {% for myform in formset %}
+            <br><br>ID:{{ myform.id.value }}
+                       {{ myform.as_p }} 
+                       <!-- <input type="button" onclick="location.href='delete/{{myform.id.value}}';" value="Delete"/> -->
+                       <a href="/delete/{{ myform.id.value }}" > Delete {{ myform.id }}</a>
+                    
+                    {% endfor %}
+                    
+            </br></br>
+
+                    <button type= submit  >Submit </button>
+                    
+            </form>
+            </div>
+            </br>
+            <input type="button" value="Add More Slide" id="add_more">
+            
+            <div id="empty_form" style="display:none" class="empty_form">
+                
+                {% for form in formset %}
+            </br>
+            </br>
+                    Title:- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.title}}
+                </br>
+                </br>
+                    Description:- {{form.description}}
+                {% endfor %}
+                
+    
+            </div>
+            <script>
+                $('#add_more').click(function() {
+                var form_idx = $('#id_form-TOTAL_FORMS').val();
+                $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
+                $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+                });
+
+            </script>
+    </body>
+</html>

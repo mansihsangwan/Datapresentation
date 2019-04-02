@@ -6,14 +6,14 @@ from .models import *
 from django.urls import reverse
 from django.template.loader import get_template
 from django.views.generic import View
-from .utils import render_to_pdf #created in step 4
-# Create your views here.
+from .utils import render_to_pdf 
+
 from django.contrib import messages
 
 def key_details(request):
     pass
 
-    return render(request, 'key.html', {})
+    return render(request, 'home.html', {})
 
 def manage(request):
     form = ManageForm(request.POST or None, request.FILES or None)
@@ -31,15 +31,14 @@ def manage(request):
 def que_delete(request,id):
     template = 'manage_ques.html'
     question= get_object_or_404(Dynamicques, id=id)
-    # if request.method=='POST':
-    #     form= ManageForm(request.POST, instance=question)
+    
     question.delete()
     messages.success(request, "Successfully deleted")
     return HttpResponseRedirect('/key/ques')
     # else:
     #     form = ManageForm(instance=question)
     # context = {"form": form , "question":question}
-    # return render(request, template , context)
+    # return
 
 def que_update(request,id):
     template = 'manage_ques.html'
@@ -118,7 +117,7 @@ def keyword_que_list(request, keyword_id):
     formset = ExampleFormset(queryset=my_queryset)
     # context= {'form': form}
     context = {'formset':formset,'form':form,'instance':instance}
-    return render(request,'first.html',context)
+    return render(request,'make_ppt.html',context)
 
 def main(request):
     form= DetailForm(request.POST or None)
@@ -131,7 +130,7 @@ def main(request):
     list = Presentation.objects.all()
     context = {'form':form,'presentation':list}
 
-    return render(request,'new.html',context)
+    return render(request,'presentation_name.html',context)
 
 def detailview(request,presentation_id):
     form= UpdateForm(request.POST or None)
@@ -167,26 +166,26 @@ def detailview(request,presentation_id):
     formset = ExampleFormset(queryset=my_queryset)
     # context= {'form': form}
     context = {'formset':formset,'form':form}
-    return render(request,'first.html',context)
+    return render(request,'make_ppt.html',context)
 
 
 def deck(request,presentation_id):
     titles = Detail.objects.filter(presentation__id=presentation_id)
     context = {'titles':titles}
-    return render(request,'second.html',context)
+    return render(request,'ppt.html',context)
 
 def de(request,keyword_id):
     titles = Detail.objects.filter(keyword__id=keyword_id)
     context = {'titles':titles}
-    return render(request,'fourth.html',context)
+    return render(request,'keyword_ppt.html',context)
 
 class GeneratePdf(View):
     def get(self, request, presentation_id , *args, **kwargs):
-        template = get_template('invoice.html')
+        template = get_template('presentation_pdf.html')
         titles = Detail.objects.filter(presentation__id=presentation_id)
         context ={'titles':titles}
         html = template.render(context)
-        pdf = render_to_pdf('invoice.html', context)
+        pdf = render_to_pdf('presentation_pdf.html', context)
         if pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
             filename = "Second%s.pdf" %("12341231")
@@ -200,11 +199,11 @@ class GeneratePdf(View):
 
 class KeyPdf(View):
     def get(self, request, keyword_id , *args, **kwargs):
-        template = get_template('invoice1.html')
+        template = get_template('keyword_pdf.html')
         titles = Detail.objects.filter(keyword__id=keyword_id)
         context ={'titles':titles}
         html = template.render(context)
-        pdf = render_to_pdf('invoice1.html', context)
+        pdf = render_to_pdf('keyword_pdf.html', context)
         if pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
             filename = "Second%s.pdf" %("12341231")

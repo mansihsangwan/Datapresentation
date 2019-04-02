@@ -479,6 +479,13 @@ a:hover, a:focus {
   font-size: 0.6666em;
 }
 
+.deck-position {
+  font-size: 0.6666em;
+  /* position: absolute; */
+  top: 0px;
+  left: 100px;
+}
+
 .deck-menu .slide {
   background: transparent;
   border-radius: 5px;
