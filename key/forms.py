@@ -12,6 +12,9 @@ class KeywordForm(forms.ModelForm):
             "add_keyword",
             
         ]
+        widgets = {
+            'add_keyword':forms.TextInput(attrs={'placeholder':'Enter Keyword'}),
+        }
     
 class KeywordListForm(forms.ModelForm):
     class Meta:
@@ -26,6 +29,9 @@ class DetailForm(forms.ModelForm):
     class Meta:
         model = Presentation
         fields=["name","date"]
+        widgets = {
+            'name':forms.TextInput(attrs={'placeholder':'Enter Presentation name'}),
+        }
 
 
 class UpdateForm(forms.ModelForm):
@@ -38,3 +44,7 @@ class ManageForm(forms.ModelForm):
     class Meta:
         model = Dynamicques
         fields=["question"]
+
+        widgets = {
+            'question':forms.TextInput(attrs={'placeholder':'Enter question'}),
+        }

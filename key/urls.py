@@ -19,4 +19,6 @@ urlpatterns = [
     path('ques/',views.manage, name='manage'),
     path('delete/<int:id>', views.que_delete, name='que_delete'),
     path('update/<int:id>', views.que_update, name='que_update'),
+    path('delete/<int:detail_id>/', delete_slide, name='delete'),
+    path('deletekeyword/<int:detail_id>/', delete_keyword_slide, name='deletekeyword'),
 ] 

@@ -90,7 +90,7 @@ def keyword_que_list(request, keyword_id):
             form_instance = form.save(commit=False)
             form.save()
             # detail_id = form_instance.id
-    ExampleFormset = modelformset_factory(Detail,fields=("title","description"),extra=1, max_num=1)
+    ExampleFormset = modelformset_factory(Detail,fields=("title","master","description"), max_num=1)
     my_queryset = Detail.objects.filter(keyword__id=keyword_id)
     if request.method == 'POST':
         formset = ExampleFormset(request.POST or None)
@@ -117,7 +117,7 @@ def keyword_que_list(request, keyword_id):
     formset = ExampleFormset(queryset=my_queryset)
     # context= {'form': form}
     context = {'formset':formset,'form':form,'instance':instance}
-    return render(request,'make_ppt.html',context)
+    return render(request,'make_keyword_ppt.html',context)
 
 def main(request):
     form= DetailForm(request.POST or None)
@@ -133,16 +133,16 @@ def main(request):
     return render(request,'presentation_name.html',context)
 
 def detailview(request,presentation_id):
-    form= UpdateForm(request.POST or None)
-    if request.method == 'POST':
-        if form.is_valid():
-            form_instance = form.save(commit=False)
-            form.save()
+    # form= UpdateForm(request.POST or None)
+    # if request.method == 'POST':
+    #     if form.is_valid():
+    #         form_instance = form.save(commit=False)
+    #         form.save()
             # detail_id = form_instance.id
-    ExampleFormset = modelformset_factory(Detail,fields=("title","description"),extra=1, max_num=1)
+    ExampleFormset = modelformset_factory(Detail,fields=("title","master","subtitle","description","img"),extra=1, max_num=1)
     my_queryset = Detail.objects.filter(presentation__id=presentation_id)
     if request.method == 'POST':
-        formset = ExampleFormset(request.POST or None)
+        formset = ExampleFormset(request.POST or None, request.FILES or None)
         print("\n"*5)
         print("before valid")
         if formset.is_valid():
@@ -152,6 +152,7 @@ def detailview(request,presentation_id):
             for obj in formset.deleted_objects:
                 obj.delete()
             presentation = Presentation.objects.get(id=presentation_id)
+            
             for form in formset:   
                 print("\n"*5)
                 print("inside form")
@@ -160,13 +161,14 @@ def detailview(request,presentation_id):
                 # form_instance.title = "New Title"
                 # form_instance.description = "New Desc"
                 form_instance.save()
+                print(form_instance.master)
 
 
         return HttpResponseRedirect(reverse('key:deck',args=(presentation_id,)))
     formset = ExampleFormset(queryset=my_queryset)
     # context= {'form': form}
-    context = {'formset':formset,'form':form}
-    return render(request,'make_ppt.html',context)
+    context = {'formset':formset}
+    return render(request,'make_ppt.html', context)
 
 
 def deck(request,presentation_id):
@@ -214,3 +216,15 @@ class KeyPdf(View):
             response['Content-Disposition'] = content
             return response
         return HttpResponse("Not found")
+
+def delete_slide(request,detail_id):
+    detail = get_object_or_404(Detail, id=detail_id)
+    presentation_id = detail.presentation.id
+    detail.delete()
+    return HttpResponseRedirect(reverse('key:detailview',args=(presentation_id,)))
+
+def delete_keyword_slide(request,detail_id):
+    detail = get_object_or_404(Detail, id=detail_id)
+    keyword_id = detail.keyword.id
+    detail.delete()
+    return HttpResponseRedirect(reverse('key:keyword_que_list',args=(keyword_id,)))

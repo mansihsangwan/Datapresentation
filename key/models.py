@@ -29,9 +29,13 @@ class Presentation(models.Model):
 
 class Detail(models.Model):
     keyword = models.ForeignKey(Keyword, on_delete=models.SET_NULL, blank=True, null=True)
+
     update_d = models.DateField(("Date"), default=datetime.date.today)
+    master = models.BooleanField(blank=True, null=True, default=False)
+    subtitle = models.CharField(max_length=100, blank=True, null=True)
     title = models.CharField(max_length=100, blank=True, null=True)
     description = models.TextField(max_length=2000, blank=True, null=True)
+    img = models.ImageField(upload_to="media/",null=True, blank=True)
     presentation = models.ForeignKey(Presentation, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):

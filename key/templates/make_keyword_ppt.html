@@ -5,9 +5,9 @@
     </head>
     <body>
             <div id="form_set">
-            <form method="post" action="" enctype="multipart/form-data">
+            <form method="post" action="">
                     {% csrf_token %}
-                    
+                    {{ form.as_p }}
                     {{ formset.management_form }}
                     
                     {% for myform in formset %}
@@ -15,16 +15,11 @@
                        {{ myform.as_p }} 
                        <!-- <input type="button" onclick="location.href='delete/{{myform.id.value}}';" value="Delete"/> -->
                        <!-- <a href="/key/delete/{{ myform.id.value }}/" > Delete {{ myform.id }}</a> -->
-                       <input type="button" onclick="location.href='/key/delete/{{ myform.id.value }}/';" value="Delete" />
+                       <input type="button" onclick="location.href='/key/deletekeyword/{{ myform.id.value }}/';" value="Delete" />
                     
                     {% endfor %}
                     
-            </br></br><div id="empty_form" style="display:none" class="empty_form">
-                
-                {{ formset.empty_form.as_p }}
-                
-    
-            </div>
+            </br></br>
 
                     <button type= submit  >Submit </button>
                     
@@ -33,7 +28,22 @@
             </br>
             <input type="button" value="Add More Slide" id="add_more">
             
-            
+            <div id="empty_form" style="display:none" class="empty_form">
+                
+                {% for form in formset %}
+            </br>
+            </br>
+                    Title:- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.title}}
+                </br>
+                </br>
+                    Master :- {{form.master}}
+                </br>
+            </br>
+                    Description:- {{form.description}}
+                {% endfor %}
+                
+    
+            </div>
             <script>
                 $('#add_more').click(function() {
                 var form_idx = $('#id_form-TOTAL_FORMS').val();
@@ -43,8 +53,8 @@
 
             </script>
             <script>
-                $('textarea').attr("placeholder","Please write description");
-                $('input').attr("placeholder","Title");
+                    $('textarea').attr("placeholder","Please write description");
+                    $('input').attr("placeholder","Title");
             </script>
     </body>
 </html>

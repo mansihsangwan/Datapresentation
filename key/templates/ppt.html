@@ -4,7 +4,7 @@
 <head>
   {% for u in titles %}
     {% if forloop.first %}
-      <input type="button" onclick="location.href='/key/pdf/{{u.presentation_id}}/';" value="Download" style="position: absolute; top: 0; left: 0; z-index: 999;" />
+      <input type="button" onclick="location.href='/key/pdf/{{u.presentation_id}}/';" value="Download" style="position: absolute; top: 0; left: 0;  z-index: 999;" />
     {% endif %}
   {% endfor %}
   <meta charset="utf-8">
@@ -58,14 +58,18 @@
 
     <!-- Begin slides. Just make elements with a class of slide. -->
 {% for title in titles %}
-{% if title.description %}
-<section class="slide" id="how-to-overview">
-      <center><h2 id="presentaion_title"><u>{{title.title}}</u></h2>
-      
-      <p>{{title.description|safe}}</p></center>
-
+  {% if title.description %}
+    <section class="slide" id="how-to-overview">
+      <center><h2 id="presentaion_title"><u><font color="blue">{{title.title}}</font></u></h2>
+        {% if not title.master %}
+          <p>{{title.subtitle}}</p>
+          <p>{{title.description}}</p>
+          {% if title.img %}
+          <img src='{{title.img.url }}'width="120" height="90"></img></center>
+          {% endif %}
+        {% endif %}
     </section>
-    {%endif%}
+  {%endif%}
 {% endfor %}
 
 
